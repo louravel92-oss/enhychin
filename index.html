@@ -702,7 +702,7 @@ body{padding:0;min-height:100vh}
         <div class="field-error" id="usernameError">⚠️ Please enter your ENGENE name!</div>
         <div class="fl" style="margin-top:18px">Your vote proof <small>(screenshot of the certificate)</small></div>
         <div class="upload-zone" id="uploadZone" onclick="triggerUpload()">
-          <div class="up-icon">📤</div>
+          <div class="up-icon"><img id="upMascot" alt="" style="height:72px;width:auto;display:block;margin:0 auto;transition:opacity .35s ease, transform .35s ease"></div>
           <div class="up-text">Tap to choose a screenshot</div>
           <div class="file-info">
             <img class="cert-preview" id="certPreview" src="" alt="Preview">
@@ -751,10 +751,10 @@ body{padding:0;min-height:100vh}
                 <div class="soon-tag">Coming soon</div>
             </div>
 
-            <div class="enchin-box box-all soon" id="allBox" data-char="all" onclick="comingSoon('All ENCHIN')">
-                <div class="check-mark">✓</div><span class="nm">All ENCHIN</span>
+            <div class="enchin-box box-all soon" id="allBox" data-char="all" onclick="comingSoon('ENCHIN')">
+                <div class="check-mark">✓</div><span class="nm">ENCHIN</span>
                 <div class="all-faces">🐥 ⚡ 🐶 ❄️ 🔥 🍊</div>
-                <div class="box-label">All ENCHIN</div>
+                <div class="box-label">ENCHIN</div>
                 <div class="soon-tag">Coming soon</div>
             </div>
 
@@ -1056,7 +1056,7 @@ function variantScheme(t, i) {
 // ALL ENCHIN: one box, several pictures inside. Add   all: [pic1, pic2, ...]   to ENCHIN_IMAGES
 // (same format as wonchu / noxstar) and the box unlocks itself and shows the picture picker when tapped.
 enchinThemes.all = Object.assign({}, enchinThemes.default, {
-    name: 'ALL ENCHIN',
+    name: 'ENCHIN',
     grads: [['#FFF3A3', '#FFC8DD', '#CFE4FF'], ['#FFFBD6', '#FFE3EF', '#E4F0FF'], ['#FFD6E8', '#FFF3A3', '#BFE3FF'],
             ['#E9D5FF', '#FFC8DD', '#FFF3A3'], ['#CFE4FF', '#E9D5FF', '#FFD6EA'], ['#FFE3C8', '#FFC8DD', '#D9CCFF']]
 });
@@ -1075,7 +1075,7 @@ enchinThemes.all = Object.assign({}, enchinThemes.default, {
     if (!box || !ENCHIN_IMAGES.all || !ENCHIN_IMAGES.all.length) return;
     box.classList.remove('soon');
     box.querySelectorAll('.box-label, .all-faces, .soon-tag').forEach(el => el.remove());
-    box.insertAdjacentHTML('beforeend', '<div class="all-thumbs">' + ENCHIN_IMAGES.all.slice(0, 2).map(src => '<img src="' + src + '" alt="All ENCHIN">').join('') + '</div>');
+    box.insertAdjacentHTML('beforeend', '<div class="all-thumbs">' + ENCHIN_IMAGES.all.slice(0, 2).map(src => '<img src="' + src + '" alt="ENCHIN">').join('') + '</div>');
     box.onclick = () => selectEnchin('all');
 })();
 
@@ -3139,6 +3139,21 @@ function goStep(d) {
     selectEnchin = function (c) { se(c); const w = document.getElementById('variantWrap'); if (w) setTimeout(() => w.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150); };
     const ra = resetAll;
     resetAll = function () { window._done = {}; ra(); };
+})();
+</script>
+<script id="upload-mascot">
+/* ikon kotak upload: ENCHIN bergantian (6 karakter), menggantikan emoji */
+(function () {
+    var img = document.getElementById('upMascot');
+    if (!img || typeof MASCOT_DATA === 'undefined') return;
+    var order = ['wonchu', 'noxstar', 'jakey', 'snowe', 'kishu', 'puni'], i = Math.floor(Math.random() * order.length);
+    function show() { var d = MASCOT_DATA[order[i % order.length]]; if (d && d[0]) img.src = d[0]; }
+    show();
+    setInterval(function () {
+        if (document.hidden) return;
+        img.style.opacity = '0'; img.style.transform = 'scale(.85)';
+        setTimeout(function () { i++; show(); img.style.opacity = '1'; img.style.transform = 'scale(1)'; }, 350);
+    }, 3200);
 })();
 </script>
 </body>
